@@ -1,7 +1,7 @@
 puts "Введите ваш год рождения"
 year = gets.chomp.to_i
 puts "Ведите дату вашего рождения (например 15 февраля)"
-date = gets.chomp.split
+date = gets.chomp.split    #разделение строки
 month = date[1].downcase   
 day = date[0].to_i       
 
