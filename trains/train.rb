@@ -1,11 +1,16 @@
-class Train
+   module Producer
+    attr_accessor :producer
+  end
   
-  
-  # Все методы public, так как все- интерфейс класса. Доступны извне класса и для подклассов. 
-  # protected нет, так как нет методов, к которым бы нужно было перекрывать доступ клиентскому коду
-   
-   attr_accessor :train
-   
+   class Train
+    extend Producer
+   @@instances = 0
+   @@number = []
+
+   def self.find(number)
+     @@number[number - 1]
+   end
+
     def initialize
     @speed = 0
     @type = "cargo"
@@ -15,6 +20,8 @@ class Train
     @next_point = @route[1] 
     @previous_point 
     @train = {type: @type, wagons: 0}
+    @@number.push(self)
+    @@instances += 1
     end
   
   def set_route(route) 
@@ -80,5 +87,4 @@ class Train
     puts "Предыдущая станция #{@route[@station_index - 1]}" if @station_index > 0
     puts "Следующая станция #{@route[@station_index + 1]}" if @station_index < @route.size - 1
   end
-  
-end  
+end 

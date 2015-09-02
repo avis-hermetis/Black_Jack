@@ -1,12 +1,17 @@
 class RailwayStation
+  @@all = []
+  def self.all
+    puts @@all
+  end
   
   attr_reader :name
 
    def initialize(name)
     @name = name
     @train_list = Array.new
+    @@all.push(name)
     end  
-
+  
    # методы ниже public(по умолчанию). Под замок не убираем, потом что они являются частью интерфейса класса 
    # и могут вызываться клиентским кодом
 
