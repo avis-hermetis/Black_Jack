@@ -1,4 +1,6 @@
 class RailwayStation
+  attr_reader :name
+  
   @@all = []
   def self.all
     puts @@all

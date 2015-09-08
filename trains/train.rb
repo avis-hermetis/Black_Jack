@@ -3,27 +3,37 @@
   end
   
    class Train
-    extend Producer
-   @@instances = 0
-   @@number = []
+    include Producer
+     
+     @@number = {}
+  
 
    def self.find(number)
-     @@number[number - 1]
-   end
+     @@number[number]
+     raise "Номер не соответствует формату" unless number =~ TRAIN_NUMBER
+    end
 
-    def initialize
+  def initialize(number, type = "cargo", route = ["Москва", "Владивосток"])
+    @number = number
     @speed = 0
-    @type = "cargo"
-    @route = ["Москва", "Владивосток"]
+    @type = type
+    @route = route
     @station_index = 0
     @current_point = @route[0]
     @next_point = @route[1] 
     @previous_point 
     @train = {type: @type, wagons: 0}
-    @@number.push(self)
-    @@instances += 1
-    end
-  
+    validate!
+    @@number[@number]= self
+    
+  end
+
+  def validate?
+    validate!
+  rescue
+    false
+  end
+   
   def set_route(route) 
     @route = route
     @station_index = 0
@@ -31,9 +41,7 @@
     @next_point = @route[1] 
   end
 
-  def add_wagon
-    self.train[:wagons] += 1 if @speed.zero?
-  end
+  
 
   def remove_wagon
     self.train[:wagons] -= 1 if @speed.zero? && self.train[:wagons] > 0
@@ -87,4 +95,18 @@
     puts "Предыдущая станция #{@route[@station_index - 1]}" if @station_index > 0
     puts "Следующая станция #{@route[@station_index + 1]}" if @station_index < @route.size - 1
   end
+
+  private
+ 
+ TRAIN_NUMBER = /^([a-z]|\d){3}\-{0,1}([a-z]|\d){2}$/ # проверка на формат:три буквы или цифры в любом порядке, 
+ #необязательный дефис (может быть, а может нет) и еще 2 буквы или цифры после дефиса.  
+
+ def validate!
+  
+  raise "Поезд с таким номером уже существует" if @@number[@number] #проверка на уникальность номера поезда
+  raise "Номер не соответствует формату" unless @number =~ TRAIN_NUMBER
+  raise "Вы не ввели номер" if @number.nil?
+  true
+  end
+
 end 
