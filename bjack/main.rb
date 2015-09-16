@@ -3,6 +3,9 @@ require_relative 'dealer.rb'
 require_relative 'user.rb'
 require_relative 'game.rb'
 
+
+puts "Добрый день, игрок!"
+puts "Как ваше имя?"
 game = Game.new
 loop do
 game.start

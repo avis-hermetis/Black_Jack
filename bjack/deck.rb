@@ -13,13 +13,7 @@ class Deck
    
   
   def shuffle
-   self.deck = @cards.keys
-   shuffled_deck = Array.new
-    while self.deck.size > 0 do
-     shuffled_deck << self.deck[rand(self.deck.size)] # генерирует массив ключей
-     self.deck.delete(shuffled_deck.last)
-    end
-    self.deck = shuffled_deck
-  end  
-  #аттрибут доступа к колоде
+   self.deck = @cards.keys.shuffle
+     end  
+  
 end
